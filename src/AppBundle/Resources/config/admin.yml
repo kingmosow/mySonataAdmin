@@ -1,0 +1,59 @@
+# src/AppBundle/Resources/config/admin.yml
+
+#sonata configurations
+services:
+    app.admin.post:
+        class: AppBundle\Admin\PostAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "CONTENT", label: Post }
+        arguments:
+            - ~
+            - AppBundle\Entity\Post
+            - ~
+        calls:
+            - [ setTranslationDomain, [AppBundle]]
+            - [addChild, ['@admin.comment']]
+        public: true
+
+    admin.category:
+        class: AppBundle\Admin\CategoryAdmin
+        arguments: [~, AppBundle\Entity\Category, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "BLOG", label: Category }
+        public: true
+
+    admin.blog_post:
+        class: AppBundle\Admin\BlogPostAdmin
+        arguments: [~, AppBundle\Entity\BlogPost, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "BLOG" , label: Blog post }
+        public: true
+
+    admin.testAdmin:
+        class: AppBundle\Admin\TestAdmin
+        arguments: [~, AppBundle\Entity\TestOneToOne, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "BLOG" , label: Test One }
+        public: true
+
+    admin.comment:
+        class: AppBundle\Admin\CommentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Comment" }
+        arguments:
+            - ~
+            - AppBundle\Entity\Comment
+            - ~
+        public: true
+
+##sonata admin
+#    app.admin.post:
+#        class: AppBundle\Admin\PostAdmin
+#        tags:
+#            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Post" }
+#        arguments:
+#            - ~
+#            - AppBundle\Entity\Post
+#            - ~
+#        calls:
+#            - [ setLabelTranslatorStrategy, ["@sonata.admin.label.strategy.underscore"]]
